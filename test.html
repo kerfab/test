@@ -1,38 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<openbox_config xmlns="http://openbox.org/3.4/rc">
-  <!-- Other sections like <resistance>, <focus>, etc., might be here -->
-  
-  <keyboard>
-    <!-- Existing keybindings might be present; leave them intact -->
-    
-    <!-- Alt+t: Try xterm (lightweight, often preinstalled) -->
-    <keybind key="A-t">
-      <action name="Execute">
-        <command>xterm</command>
-      </action>
-    </keybind>
-    
-    <!-- Alt+x: Try lxterminal (common in lightweight setups like LXDE) -->
-    <keybind key="A-x">
-      <action name="Execute">
-        <command>lxterminal</command>
-      </action>
-    </keybind>
-    
-    <!-- Alt+l: Try gnome-terminal (if a heavier desktop was once installed) -->
-    <keybind key="A-l">
-      <action name="Execute">
-        <command>gnome-terminal</command>
-      </action>
-    </keybind>
-    
-    <!-- Alt+g: Try bash directly (might fail without a terminal emulator) -->
-    <keybind key="A-g">
-      <action name="Execute">
-        <command>bash</command>
-      </action>
-    </keybind>
-  </keyboard>
-  
-  <!-- Other sections like <mouse>, <menu>, etc., might follow -->
-</openbox_config>
+<keybind key="A-c">
+  <action name="Execute">
+    <command>touch /tmp/testfile</command>
+  </action>
+</keybind>
