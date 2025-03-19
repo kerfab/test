@@ -1,5 +1,39 @@
-<keybind key="A-c">
-  <action name="Execute">
-    <command>touch /home/oai/testfile</command>
-  </action>
-</keybind>
+<?xml version="1.0" encoding="UTF-8"?>
+<openbox_config xmlns="http://openbox.org/3.4/rc">
+
+  <!-- Focus settings -->
+  <focus>
+    <focusNew>yes</focusNew>
+    <followMouse>no</followMouse>
+    <focusLast>yes</focusLast>
+  </focus>
+
+  <!-- Theme (optional, but included for completeness) -->
+  <theme>
+    <name>Clearlooks</name>
+  </theme>
+
+  <!-- Keyboard bindings -->
+  <keyboard>
+    <keybind key="A-c">
+      <action name="Execute">
+        <command>touch /tmp/testfile</command>
+      </action>
+    </keybind>
+  </keyboard>
+
+  <!-- Mouse bindings (minimal default) -->
+  <mouse>
+    <context name="Root">
+      <mousebind button="Right" action="Press">
+        <action name="ShowMenu"><menu>root-menu</menu></action>
+      </mousebind>
+    </context>
+  </mouse>
+
+  <!-- Menu file reference -->
+  <menu>
+    <file>menu.xml</file>
+  </menu>
+
+</openbox_config>
