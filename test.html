@@ -1,39 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openbox_config xmlns="http://openbox.org/3.4/rc">
-
-  <!-- Focus settings -->
-  <focus>
-    <focusNew>yes</focusNew>
-    <followMouse>no</followMouse>
-    <focusLast>yes</focusLast>
-  </focus>
-
-  <!-- Theme (optional, but included for completeness) -->
-  <theme>
-    <name>Clearlooks</name>
-  </theme>
-
-  <!-- Keyboard bindings -->
-  <keyboard>
-    <keybind key="A-c">
+<openbox_menu>
+  <menu id="root-menu" label="Test">
+    <item label="Run">
       <action name="Execute">
-        <command>touch /tmp/testfile</command>
+        <command>touch /tmp/menuworked</command>
       </action>
-    </keybind>
-  </keyboard>
-
-  <!-- Mouse bindings (minimal default) -->
-  <mouse>
-    <context name="Root">
-      <mousebind button="Right" action="Press">
-        <action name="ShowMenu"><menu>root-menu</menu></action>
-      </mousebind>
-    </context>
-  </mouse>
-
-  <!-- Menu file reference -->
-  <menu>
-    <file>menu.xml</file>
+    </item>
   </menu>
-
-</openbox_config>
+</openbox_menu>
