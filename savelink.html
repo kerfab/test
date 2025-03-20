@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Download with application/octet-stream</title>
+</head>
+<body>
+  <h1>Create a link to download text without .txt extension</h1>
+
+  <textarea id="textArea" rows="10" cols="60" placeholder="Type or paste your text..."></textarea>
+  <br><br>
+
+  <button id="makeLinkBtn">Make Download Link</button>
+  <br><br>
+
+  <!-- This link will be updated to contain the data URL -->
+  <a id="downloadLink" href="#" download="myfilename.log">Download Link</a>
+
+  <script>
+    const textArea = document.getElementById('textArea');
+    const makeLinkBtn = document.getElementById('makeLinkBtn');
+    const downloadLink = document.getElementById('downloadLink');
+
+    makeLinkBtn.addEventListener('click', () => {
+      // 1. Get the text from the textarea
+      const textContent = textArea.value;
+      
+      // 2. Build a data URL with MIME type 'application/octet-stream'
+      //    This can reduce the chance of Chromium adding ".txt"
+      const dataUrl = 'data:application/octet-stream;charset=utf-8,' 
+                    + encodeURIComponent(textContent);
+
+      // 3. Set the link's href to this data URL
+      //    The download attribute sets the suggested filename
+      downloadLink.href = dataUrl;
+      downloadLink.download = 'myfilename.log';  // Desired file name/extension
+
+      // (Optional) Visually confirm it's updated
+      downloadLink.textContent = 'Download myfilename.log';
+    });
+  </script>
+</body>
+</html>
