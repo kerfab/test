@@ -15,33 +15,43 @@
 
     // Host base URL
     const baseURL = "http://localhost:8080/";
-    
+
     const resultsDiv = document.getElementById('results');
 
     async function checkEndpoints() {
       for (const endpoint of endpoints) {
-        // Construct the full URL
         const url = baseURL + endpoint;
+        let statusCode = '';
+        let content = '';
 
         try {
           // Attempt to fetch the URL
           const response = await fetch(url);
+          statusCode = response.status;    // e.g., 200, 404, etc.
+          // Read the response body as text (even if not 200)
+          content = await response.text();
 
-          // If status is 200, print it
-          if (response.status === 200) {
-            const p = document.createElement('p');
-            p.textContent = `200 - ${url}`;
-            resultsDiv.appendChild(p);
-          }
-          // If not 200, do nothing (ignore)
         } catch (error) {
-          // If fetch fails (e.g., network error), do nothing (ignore)
-          console.error(`Error fetching ${url}:`, error);
+          // If fetch fails (network error, etc.), indicate it
+          statusCode = 'Network Error';
+          content = String(error);
         }
+
+        // Build an output snippet
+        // <hr> after each item
+        const output = `
+          <p><strong>URL:</strong> ${url}</p>
+          <p><strong>Status:</strong> ${statusCode}</p>
+          <pre>${content}</pre>
+          <hr>
+        `;
+
+        // Append to the page
+        resultsDiv.innerHTML += output;
       }
     }
 
-    // Start checking immediately
+    // Start checking on load
     checkEndpoints();
   </script>
 </body>
