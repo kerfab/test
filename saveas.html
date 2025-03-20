@@ -2,41 +2,30 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Write Text and Save via "Save Link As"</title>
+  <title>Replace Page with Text</title>
 </head>
 <body>
-  <h1>Write Text Below</h1>
+  <h1>Type your text below</h1>
   
   <!-- Large text area for readability -->
-  <textarea id="textInput" rows="20" cols="80" placeholder="Type or paste your text here..."></textarea>
+  <textarea id="textArea" rows="20" cols="80" placeholder="Write or paste your text here..."></textarea>
   <br><br>
 
-  <!-- Button to update the data URL for the link -->
-  <button id="updateLinkBtn">Update “Save As” Link</button>
-  <br><br>
-
-  <!-- This link is where you can do a "Save link as..." -->
-  <a id="saveLink" href="#" download="mytextfile.txt">
-    Right-click this link and choose “Save link as…”
-  </a>
+  <!-- Button that replaces the entire page with just the typed text -->
+  <button onclick="replacePageContent()">Replace Page Content</button>
 
   <script>
-    const textInput = document.getElementById('textInput');
-    const updateLinkBtn = document.getElementById('updateLinkBtn');
-    const saveLink = document.getElementById('saveLink');
+    function replacePageContent() {
+      // 1. Get the user's text
+      const text = document.getElementById("textArea").value;
 
-    updateLinkBtn.addEventListener('click', () => {
-      // 1. Get the text from the textarea
-      const textContent = textInput.value;
+      // 2. Build a data URL that is just plain text (no HTML)
+      const dataUrl = "data:text/plain;charset=utf-8," + encodeURIComponent(text);
 
-      // 2. Create a data URL (text/plain)
-      //    Encode the text to ensure special characters are preserved
-      const dataUrl = "data:text/plain;charset=utf-8," + encodeURIComponent(textContent);
-
-      // 3. Set the link's href to this data URL
-      //    Now the user can right-click it and choose “Save link as...”
-      saveLink.href = dataUrl;
-    });
+      // 3. Navigate to that data URL
+      //    The browser will load a new page with only the raw text—no HTML tags remain.
+      window.location.href = dataUrl;
+    }
   </script>
 </body>
 </html>
