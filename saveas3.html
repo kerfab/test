@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Replace Page with Raw Text</title>
+</head>
+<body>
+  <h1>Type or paste your text below</h1>
+  
+  <!-- A large text area for readability -->
+  <textarea id="textArea" rows="20" cols="80"></textarea>
+  <br><br>
+
+  <!-- Button that replaces the entire page with just the typed text -->
+  <button id="replaceBtn">Replace Page Content</button>
+
+  <script>
+    document.getElementById('replaceBtn').addEventListener('click', () => {
+      // 1. Grab the text from the <textarea>
+      const text = document.getElementById("textArea").value;
+      
+      // 2. Reopen the document in "text/plain" mode, wiping out previous HTML
+      document.open("text/plain", "replace");
+      
+      // 3. Write only the raw text into the document
+      document.write(text);
+      
+      // 4. Close the document, finalizing the content
+      document.close();
+      
+      // At this point, the page shows only your text.
+      // You can then use "File → Save Page As..." (or Ctrl+S) to save it as a text file.
+    });
+  </script>
+</body>
+</html>
