@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Write Text and Save via "Save Link As"</title>
+</head>
+<body>
+  <h1>Write Text Below</h1>
+  
+  <!-- Large text area for readability -->
+  <textarea id="textInput" rows="20" cols="80" placeholder="Type or paste your text here..."></textarea>
+  <br><br>
+
+  <!-- Button to update the data URL for the link -->
+  <button id="updateLinkBtn">Update “Save As” Link</button>
+  <br><br>
+
+  <!-- This link is where you can do a "Save link as..." -->
+  <a id="saveLink" href="#" download="mytextfile.txt">
+    Right-click this link and choose “Save link as…”
+  </a>
+
+  <script>
+    const textInput = document.getElementById('textInput');
+    const updateLinkBtn = document.getElementById('updateLinkBtn');
+    const saveLink = document.getElementById('saveLink');
+
+    updateLinkBtn.addEventListener('click', () => {
+      // 1. Get the text from the textarea
+      const textContent = textInput.value;
+
+      // 2. Create a data URL (text/plain)
+      //    Encode the text to ensure special characters are preserved
+      const dataUrl = "data:text/plain;charset=utf-8," + encodeURIComponent(textContent);
+
+      // 3. Set the link's href to this data URL
+      //    Now the user can right-click it and choose “Save link as...”
+      saveLink.href = dataUrl;
+    });
+  </script>
+</body>
+</html>
