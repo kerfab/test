@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>File System Access Demo</title>
+</head>
+<body>
+  <button id="openFile">Open File</button>
+  <button id="saveFile" disabled>Save Changes</button>
+  <pre id="fileContent"></pre>
+
+  <script>
+    let fileHandle;
+    let fileContentElem = document.getElementById('fileContent');
+    let saveFileBtn = document.getElementById('saveFile');
+
+    document.getElementById('openFile').addEventListener('click', async () => {
+      try {
+        // Prompt user to pick a file
+        [fileHandle] = await window.showOpenFilePicker();
+        if (fileHandle) {
+          // Get a File object to read the content
+          const fileData = await fileHandle.getFile();
+          const text = await fileData.text();
+          fileContentElem.textContent = text;
+          saveFileBtn.disabled = false;
+        }
+      } catch (err) {
+        console.error('File open cancelled or failed', err);
+      }
+    });
+
+    saveFileBtn.addEventListener('click', async () => {
+      if (!fileHandle) return;
+      try {
+        // Create a writable stream to the existing file
+        const writable = await fileHandle.createWritable();
+        const newContent = fileContentElem.textContent;
+        await writable.write(newContent);
+        await writable.close();
+        alert('File saved.');
+      } catch (err) {
+        console.error('Save failed', err);
+      }
+    });
+  </script>
+</body>
+</html>
