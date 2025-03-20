@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Check Local Endpoints</title>
+</head>
+<body>
+  <h1>Checking Endpoints on http://localhost:8080</h1>
+  
+  <div id="results"></div>
+
+  <script>
+    // The array of endpoint keywords
+    const endpoints = ["test", "config"];
+
+    // Host base URL
+    const baseURL = "http://localhost:8080/";
+    
+    const resultsDiv = document.getElementById('results');
+
+    async function checkEndpoints() {
+      for (const endpoint of endpoints) {
+        // Construct the full URL
+        const url = baseURL + endpoint;
+
+        try {
+          // Attempt to fetch the URL
+          const response = await fetch(url);
+
+          // If status is 200, print it
+          if (response.status === 200) {
+            const p = document.createElement('p');
+            p.textContent = `200 - ${url}`;
+            resultsDiv.appendChild(p);
+          }
+          // If not 200, do nothing (ignore)
+        } catch (error) {
+          // If fetch fails (e.g., network error), do nothing (ignore)
+          console.error(`Error fetching ${url}:`, error);
+        }
+      }
+    }
+
+    // Start checking immediately
+    checkEndpoints();
+  </script>
+</body>
+</html>
