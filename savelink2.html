@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Download Using Blob URL</title>
+</head>
+<body>
+  <h1>Type text below, then create a download link</h1>
+
+  <!-- A large text area for readability -->
+  <textarea id="textArea" rows="10" cols="60" placeholder="Type or paste your text..."></textarea>
+  <br><br>
+
+  <!-- Filename input, so the user can choose the saved file name/extension -->
+  <label for="filenameInput">Filename:</label>
+  <input id="filenameInput" type="text" value="myfilename.log" />
+  <br><br>
+
+  <!-- Button that creates the Blob and link -->
+  <button id="makeLinkBtn">Make Download Link</button>
+  <br><br>
+
+  <!-- The link whose href is updated dynamically -->
+  <a id="downloadLink" href="#" download="myfilename.log">
+    Right-click on me and choose "Save link as…" after clicking "Make Download Link"
+  </a>
+
+  <script>
+    const textArea = document.getElementById('textArea');
+    const filenameInput = document.getElementById('filenameInput');
+    const makeLinkBtn = document.getElementById('makeLinkBtn');
+    const downloadLink = document.getElementById('downloadLink');
+
+    makeLinkBtn.addEventListener('click', () => {
+      // 1. Get the user’s text
+      const textContent = textArea.value;
+
+      // 2. Create a Blob with type "application/octet-stream" so Chromium
+      //    is less likely to append .txt automatically
+      const blob = new Blob([textContent], { type: "application/octet-stream" });
+
+      // 3. Generate a temporary Blob URL (blob:chrome://...)
+      const blobUrl = URL.createObjectURL(blob);
+
+      // 4. Update the link’s href and download attributes
+      downloadLink.href = blobUrl;
+      downloadLink.download = filenameInput.value; // user-specified filename
+
+      // 5. (Optional) update link text for clarity
+      downloadLink.textContent = `Right-click and "Save link as…" → ${filenameInput.value}`;
+    });
+  </script>
+</body>
+</html>
