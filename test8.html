@@ -2,35 +2,45 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Read and Print File Content</title>
+  <title>Save Text as File</title>
 </head>
 <body>
-  <h1>Open and Print File Content</h1>
-  
-  <!-- 1. A file input for selecting the file -->
-  <input type="file" id="fileInput" accept=".txt"/>
-  
-  <!-- 2. A place to display the file’s content -->
-  <pre id="fileContent" style="border:1px solid #ccc; padding:10px;"></pre>
+  <h1>Write text and save as a file</h1>
 
-  <!-- 3. Script to read the file and output its content -->
+  <!-- Text input area -->
+  <textarea id="textInput" rows="10" cols="50" placeholder="Type or paste your text here..."></textarea>
+  <br><br>
+
+  <!-- Button to trigger the file save -->
+  <button id="saveBtn">Save as File</button>
+
   <script>
-    // Grab the file input element
-    const fileInput = document.getElementById('fileInput');
-    const fileContent = document.getElementById('fileContent');
+    const textInput = document.getElementById('textInput');
+    const saveBtn = document.getElementById('saveBtn');
 
-    fileInput.addEventListener('change', () => {
-      // Get the first selected file (if any)
-      const file = fileInput.files[0];
-      if (!file) return;
+    saveBtn.addEventListener('click', () => {
+      // 1. Grab the text from the textarea
+      const textToSave = textInput.value;
 
-      // Use FileReader to read file as text
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        // Display the file content in the <pre> element
-        fileContent.textContent = event.target.result;
-      };
-      reader.readAsText(file);
+      // 2. Create a Blob object from the text
+      const blob = new Blob([textToSave], { type: 'text/plain' });
+
+      // 3. Generate a temporary URL for the Blob
+      const url = URL.createObjectURL(blob);
+
+      // 4. Create an invisible <a> link, set the URL, and download attributes
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'mytextfile.txt'; // Desired file name
+      link.style.display = 'none';
+
+      // 5. Add the link to the page, trigger a click, then remove
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // 6. Release the temporary URL
+      URL.revokeObjectURL(url);
     });
   </script>
 </body>
