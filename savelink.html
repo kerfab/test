@@ -1,42 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Download with application/octet-stream</title>
+  <meta charset="utf-8" />
+  <title>Dynamic Download Link with Editable Href</title>
 </head>
 <body>
-  <h1>Create a link to download text without .txt extension</h1>
+  <h1>Write text, choose a filename, and generate a download link</h1>
 
+  <!-- Large text area for user content -->
   <textarea id="textArea" rows="10" cols="60" placeholder="Type or paste your text..."></textarea>
   <br><br>
 
+  <!-- Text input to specify the desired filename -->
+  <label for="filenameInput">Filename:</label>
+  <input type="text" id="filenameInput" value="myfilename.log" />
+  <br><br>
+
+  <!-- Button to update the link with the above text and filename -->
   <button id="makeLinkBtn">Make Download Link</button>
   <br><br>
 
-  <!-- This link will be updated to contain the data URL -->
-  <a id="downloadLink" href="#" download="myfilename.log">Download Link</a>
+  <!-- The link whose href/download we update dynamically -->
+  <a id="downloadLink" href="#" download="myfilename.log">Download Link (Right-click → Save link as…)</a>
 
   <script>
     const textArea = document.getElementById('textArea');
+    const filenameInput = document.getElementById('filenameInput');
     const makeLinkBtn = document.getElementById('makeLinkBtn');
     const downloadLink = document.getElementById('downloadLink');
 
     makeLinkBtn.addEventListener('click', () => {
       // 1. Get the text from the textarea
       const textContent = textArea.value;
-      
-      // 2. Build a data URL with MIME type 'application/octet-stream'
-      //    This can reduce the chance of Chromium adding ".txt"
-      const dataUrl = 'data:application/octet-stream;charset=utf-8,' 
+
+      // 2. Create a data URL using "application/octet-stream"
+      //    This reduces the chance that Chromium might auto-append ".txt"
+      const dataUrl = "data:application/octet-stream;charset=utf-8," 
                     + encodeURIComponent(textContent);
 
       // 3. Set the link's href to this data URL
-      //    The download attribute sets the suggested filename
       downloadLink.href = dataUrl;
-      downloadLink.download = 'myfilename.log';  // Desired file name/extension
 
-      // (Optional) Visually confirm it's updated
-      downloadLink.textContent = 'Download myfilename.log';
+      // 4. Update the download attribute to match the user-specified filename
+      downloadLink.download = filenameInput.value;
+
+      // (Optional) update link text for clarity
+      downloadLink.textContent = `Download "${filenameInput.value}"`;
     });
   </script>
 </body>
